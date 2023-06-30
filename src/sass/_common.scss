@@ -1,1 +1,26 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+.show {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.breed-select {
+  visibility: hidden;
+}
+
+.cat-img {
+  width: 50%;
+}
+.cat-info {
+  visibility: hidden;
+}
+
+.loader {
+  visibility: hidden;
+}
+
+.error {
+  visibility: hidden;
+}

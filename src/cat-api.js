@@ -39,12 +39,13 @@ export function displayCatInfo(breedId) {
 
         // Wyświetlanie obrazu i informacji o kocie
         const catInfoHTML = `
-          <img src="${catImage}" alt="${catName}" />
+          <img class="cat-img" src="${catImage}" alt="${catName}" />
           <h3>${catName}</h3>
           <p><strong>Description:</strong> ${catDescription}</p>
           <p><strong>Temperament:</strong> ${catTemperament}</p>
         `;
         catInfoDiv.innerHTML = catInfoHTML;
+        catInfoDiv.classList.add('show');
       })
       .catch(error => {
         console.error('Error fetching cat image:', error);
