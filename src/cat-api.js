@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 axios.defaults.headers.common['x-api-key'] =
   'live_J7ed4oG6Xw6A2thQTqDeiztQtIRkAmYBI2c26M1D9rUDTmUojJvFjk3MR1zVFrBE';
 
@@ -14,18 +13,19 @@ export function fetchBreeds() {
 }
 
 export function displayCatInfo(breedId) {
+  const loader = document.querySelector('.loader');
   const breedSelect = document.querySelector('.breed-select');
   const catInfoDiv = document.querySelector('.cat-info');
 
+  //pokaz loader i ukryj info
+
+  loader.classList.remove('hide');
+  catInfoDiv.classList.add('hide');
+
   // Znajdowanie wybranej rasy na podstawie breedId
-  let selectedBreed;
-  for (let i = 0; i < breedSelect.options.length; i++) {
-    const option = breedSelect.options[i];
-    if (option.value === breedId) {
-      selectedBreed = option;
-      break;
-    }
-  }
+  const selectedBreed = Array.from(breedSelect.options).find(
+    option => option.value === breedId
+  );
 
   if (selectedBreed) {
     // Pobieranie informacji o kocie na podstawie wybranej rasy
@@ -45,7 +45,9 @@ export function displayCatInfo(breedId) {
           <p><strong>Temperament:</strong> ${catTemperament}</p>
         `;
         catInfoDiv.innerHTML = catInfoHTML;
-        catInfoDiv.classList.add('show');
+        //pokaz info i ukryj loader
+        loader.classList.add('hide');
+        catInfoDiv.classList.remove('hide');
       })
       .catch(error => {
         console.error('Error fetching cat image:', error);
