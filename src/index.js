@@ -3,6 +3,7 @@ import { fetchBreeds, displayCatInfo } from './cat-api.js';
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
+const divError = document.querySelector('.error');
 
 //pokaż loader i ukryj listę
 loader.classList.remove('hide');
@@ -33,4 +34,8 @@ fetchBreeds()
   })
   .catch(error => {
     console.error('Error fetching cat breeds:', error);
+    loader.classList.remove('hide');
+    setTimeout(() => {
+      loader.classList.remove('hide');
+    }, 2000);
   });

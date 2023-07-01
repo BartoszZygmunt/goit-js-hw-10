@@ -52,6 +52,10 @@ export function displayCatInfo(breedId) {
       .catch(error => {
         console.error('Error fetching cat image:', error);
         catInfoDiv.innerHTML = '<p>Error fetching cat image.</p>';
+        loader.classList.remove('hide');
+        setTimeout(() => {
+          loader.classList.remove('hide');
+        }, 2000);
       });
   }
 }
