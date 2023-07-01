@@ -1,5 +1,10 @@
 import './sass/index.scss';
 import { fetchBreeds, displayCatInfo } from './cat-api.js';
+import SlimSelect from 'slim-select';
+
+new SlimSelect({
+  select: '#selectElement2',
+});
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
@@ -33,9 +38,10 @@ fetchBreeds()
     breedSelect.classList.remove('hide');
   })
   .catch(error => {
-    console.error('Error fetching cat breeds:', error);
-    loader.classList.remove('hide');
+    console.error('123 Error fetching cat breeds:', error);
+    divError.classList.remove('hide');
+    loader.classList.add('hide');
     setTimeout(() => {
-      loader.classList.remove('hide');
-    }, 2000);
+      divError.classList.add('hide');
+    }, 3000);
   });

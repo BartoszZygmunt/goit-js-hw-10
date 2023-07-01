@@ -7,7 +7,7 @@ export function fetchBreeds() {
     .get('https://api.thecatapi.com/v1/breeds')
     .then(response => response.data)
     .catch(error => {
-      console.error('Error fetching cat breeds:', error);
+      console.error('Oh no! Error fetching cat breeds:', error);
       throw error;
     });
 }
@@ -40,9 +40,11 @@ export function displayCatInfo(breedId) {
         // Wyświetlanie obrazu i informacji o kocie
         const catInfoHTML = `
           <img class="cat-img" src="${catImage}" alt="${catName}" />
-          <h3>${catName}</h3>
-          <p><strong>Description:</strong> ${catDescription}</p>
-          <p><strong>Temperament:</strong> ${catTemperament}</p>
+          <div class="catInfo"> 
+            <h3>${catName}</h3>
+            <p><strong>Description:</strong> ${catDescription}</p>
+            <p><strong>Temperament:</strong> ${catTemperament}</p>
+          </div>
         `;
         catInfoDiv.innerHTML = catInfoHTML;
         //pokaz info i ukryj loader
@@ -50,12 +52,15 @@ export function displayCatInfo(breedId) {
         catInfoDiv.classList.remove('hide');
       })
       .catch(error => {
+        const divError = document.querySelector('.error');
+        const breedSelect = document.querySelector('.breed-select');
         console.error('Error fetching cat image:', error);
-        catInfoDiv.innerHTML = '<p>Error fetching cat image.</p>';
-        loader.classList.remove('hide');
+        loader.classList.add('hide');
+        breedSelect.classList.add('hide');
+        divError.classList.remove('hide');
         setTimeout(() => {
-          loader.classList.remove('hide');
-        }, 2000);
+          divError.classList.remove('hide');
+        }, 3000);
       });
   }
 }

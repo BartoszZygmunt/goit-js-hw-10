@@ -12,6 +12,8 @@
   width: 50%;
 }
 .cat-info {
+  display: flex;
+  padding: 10px 0;
   //visibility: hidden;
 }
 
@@ -21,4 +23,14 @@
 
 .error {
   //visibility: hidden;
+}
+
+.catInfo {
+  padding-left: 20px;
+  padding-right: 20px;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+  }
 }
