@@ -1,15 +1,20 @@
 import './sass/index.scss';
 import '../node_modules/slim-select/dist/slimselect.css';
 import { fetchBreeds, displayCatInfo } from './cat-api.js';
-import SlimSelect from 'slim-select';
+import Slimselect from 'slim-select';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-new SlimSelect({
+export const select = new Slimselect({
   select: '#selectElement',
+  events: {
+    afterChange: newVal => {
+      displayCatInfo(newVal[0].value);
+    },
+  },
 });
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
-const divError = document.querySelector('.error');
 
 //pokaż loader i ukryj listę
 loader.classList.remove('hide');
@@ -18,31 +23,17 @@ breedSelect.classList.add('hide');
 // Pobranie ras kotów
 fetchBreeds()
   .then(breeds => {
+    const options = breeds.map(breed => ({
+      text: breed.name,
+      value: breed.id,
+    }));
     // Wypełnienie select opcjami na podstawie danych o rasach
-    breeds.forEach(breed => {
-      const option = document.createElement('option');
-      option.value = breed.id;
-      option.innerText = breed.name;
-      option.dataset.description = breed.description;
-      option.dataset.temperament = breed.temperament;
-      breedSelect.appendChild(option);
-    });
-
-    // Nasłuchiwanie zdarzenia change na elemencie select
-    breedSelect.addEventListener('change', event => {
-      const selectedBreedId = event.target.value;
-      displayCatInfo(selectedBreedId);
-    });
+    select.setData(options);
 
     //ukryj loader i pokaz listę
     loader.classList.add('hide');
     breedSelect.classList.remove('hide');
   })
   .catch(error => {
-    console.error('123 Error fetching cat breeds:', error);
-    divError.classList.remove('hide');
-    loader.classList.add('hide');
-    setTimeout(() => {
-      divError.classList.add('hide');
-    }, 3000);
+    Notify.failure('Error fetching cat breeds:', error);
   });

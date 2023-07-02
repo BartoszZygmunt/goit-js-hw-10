@@ -2,19 +2,21 @@ import axios from 'axios';
 axios.defaults.headers.common['x-api-key'] =
   'live_J7ed4oG6Xw6A2thQTqDeiztQtIRkAmYBI2c26M1D9rUDTmUojJvFjk3MR1zVFrBE';
 
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { select } from './index.js';
+
 export function fetchBreeds() {
   return axios
     .get('https://api.thecatapi.com/v1/breeds')
     .then(response => response.data)
     .catch(error => {
-      console.error('Oh no! Error fetching cat breeds:', error);
       throw error;
     });
 }
 
 export function displayCatInfo(breedId) {
+  //   debugger;
   const loader = document.querySelector('.loader');
-  const breedSelect = document.querySelector('.breed-select');
   const catInfoDiv = document.querySelector('.cat-info');
 
   //pokaz loader i ukryj info
@@ -23,19 +25,19 @@ export function displayCatInfo(breedId) {
   catInfoDiv.classList.add('hide');
 
   // Znajdowanie wybranej rasy na podstawie breedId
-  const selectedBreed = Array.from(breedSelect.options).find(
-    option => option.value === breedId
-  );
+  const selectedBreed = select.getSelected(); // Will return an array of strings
+  console.log(selectedBreed);
 
   if (selectedBreed) {
     // Pobieranie informacji o kocie na podstawie wybranej rasy
     axios
       .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
       .then(response => {
+        // debugger;
         const catImage = response.data[0].url;
-        const catName = selectedBreed.innerText;
-        const catDescription = selectedBreed.dataset.description;
-        const catTemperament = selectedBreed.dataset.temperament;
+        const catName = response.data[0].breeds[0].name;
+        const catDescription = response.data[0].breeds[0].description;
+        const catTemperament = response.data[0].breeds[0].temperament;
 
         // Wyświetlanie obrazu i informacji o kocie
         const catInfoHTML = `
@@ -52,15 +54,10 @@ export function displayCatInfo(breedId) {
         catInfoDiv.classList.remove('hide');
       })
       .catch(error => {
-        const divError = document.querySelector('.error');
+        Notify.failure('Error fetching cat breeds:', error);
         const breedSelect = document.querySelector('.breed-select');
-        console.error('Error fetching cat image:', error);
         loader.classList.add('hide');
         breedSelect.classList.add('hide');
-        divError.classList.remove('hide');
-        setTimeout(() => {
-          divError.classList.remove('hide');
-        }, 3000);
       });
   }
 }
