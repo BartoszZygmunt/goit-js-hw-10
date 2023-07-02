@@ -1,9 +1,10 @@
 import './sass/index.scss';
+import '../node_modules/slim-select/dist/slimselect.css';
 import { fetchBreeds, displayCatInfo } from './cat-api.js';
 import SlimSelect from 'slim-select';
 
 new SlimSelect({
-  select: '#selectElement2',
+  select: '#selectElement',
 });
 
 const breedSelect = document.querySelector('.breed-select');
