@@ -19,12 +19,7 @@ $breakpoints: (
 }
 
 .hide {
-  //visibility: hidden;
   display: none !important;
-}
-
-.breed-select {
-  //visibility: hidden;
 }
 
 .cat-img {
@@ -46,15 +41,6 @@ $breakpoints: (
   @include mq(tablet) {
     flex-direction: row;
   }
-  //visibility: hidden;
-}
-
-.loader {
-  //visibility: hidden;
-}
-
-.error {
-  //visibility: hidden;
 }
 
 .catInfo {

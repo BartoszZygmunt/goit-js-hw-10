@@ -26,7 +26,7 @@ export function displayCatInfo(breedId) {
 
   // Znajdowanie wybranej rasy na podstawie breedId
   const selectedBreed = select.getSelected(); // Will return an array of strings
-  console.log(selectedBreed);
+  //console.log(selectedBreed);
 
   if (selectedBreed) {
     // Pobieranie informacji o kocie na podstawie wybranej rasy
